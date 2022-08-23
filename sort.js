@@ -24,12 +24,13 @@ productsList.push(new Products('011', 'lychee', 30))
 productsList.push(new Products('012', 'watermelons', 150));
 
 const tableRows = document.getElementById('tableRows');
-document.getElementById('tableHeader').addEventListener('click', sortColumn)
+document.getElementById('tableHeader').addEventListener('click', sortColumn);
+
+const ascendingColumns = { idHeader: false, nameHeader: false, priceHeader: false }
 
 productsList.forEach(displayTable)
 
 function displayTable(element) {
-
 
     tableRows.innerHTML += `
                 <tr>
@@ -42,11 +43,14 @@ function displayTable(element) {
 
 function sortColumn(event) {
     if (event.target.id === 'idHeader') {
-        productsList.sort((a, b) => stringSort(a.id, b.id))
+        productsList.sort((a, b) => stringSort(a.id, b.id, ascendingColumns.idHeader))
+        ascendingColumns.idHeader = !ascendingColumns.idHeader;
     } else if (event.target.id === 'nameHeader') {
-        productsList.sort((a, b) => stringSort(a.name, b.name))
+        productsList.sort((a, b) => stringSort(a.name, b.name, ascendingColumns.nameHeader))
+        ascendingColumns.nameHeader = !ascendingColumns.nameHeader;
     } else if (event.target.id === 'priceHeader') {
-        productsList.sort((a, b) => intSort(a.price, b.price))
+        productsList.sort((a, b) => numbersSort(a.price, b.price, ascendingColumns.priceHeader))
+        ascendingColumns.priceHeader = !ascendingColumns.priceHeader;
     }
 
     tableRows.innerHTML = '';
@@ -55,23 +59,27 @@ function sortColumn(event) {
 
 
 
-function stringSort(first, second) {
+function stringSort(first, second, isAsc) {
     const nameA = first.toUpperCase();
     const nameB = second.toUpperCase();
 
-    if (nameA > nameB)
-        return -1;
+    return numbersSort(nameA, nameB, isAsc)
 
-    if (nameA < nameB)
-        return 1;
-    return 0;
 }
 
-function intSort(first, second) {
-    if (first > second)
-        return -1;
+function numbersSort(first, second, isAsc) {
+    if (isAsc === false) {
+        if (first > second)
+            return -1;
 
-    if (first < second)
-        return 1;
+        if (first < second)
+            return 1;
+    } else {
+        if (first < second)
+            return -1;
+
+        if (first > second)
+            return 1;
+    }
     return 0;
 }
