@@ -9,3 +9,15 @@
     width: 1px;
     height: 1px;
 }
+
+table{
+    width: 100%;
+}
+
+thead *{
+    font-weight: 900;
+}
+
+td{
+    padding: 5px;
+}
