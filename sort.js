@@ -6,7 +6,6 @@ class Products {
         this.name = name;
         this.price = price;
     }
-
 }
 
 const productsList = [];
@@ -57,14 +56,11 @@ function sortColumn(event) {
     productsList.forEach(displayTable)
 }
 
-
-
 function stringSort(first, second, isAsc) {
     const nameA = first.toUpperCase();
     const nameB = second.toUpperCase();
 
     return numbersSort(nameA, nameB, isAsc)
-
 }
 
 function numbersSort(first, second, isAsc) {
